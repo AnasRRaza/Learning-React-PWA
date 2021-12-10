@@ -40,3 +40,18 @@ self.addEventListener("fetch", (e) => {
   }
 });
 
+self.addEventListener("activate", function (event) {
+  event.waitUntil(
+    caches.keys().then(function (cachesName) {
+      return Promise.all(
+        cachesName
+          .filter(function (cacheName) {
+            return cacheName.startsWith("Offline-") && cacheName != StaticCache;
+          })
+          .map(function (cacheName) {
+            return caches.delete(cacheName);
+          })
+      );
+    })
+  );
+});
