@@ -1,6 +1,6 @@
 console.log("SW from Public");
 
-const cacheName = "learn-pwa";
+const appCacheName = "learn-pwa";
 
 self.addEventListener("install", (e) => {
   e.waitUntil(
@@ -28,12 +28,7 @@ self.addEventListener("fetch", (e) => {
         if (res) {
           return res;
         } else {
-          const requestUrl = e.request.clone()
-          fetch(requestUrl).then((res) => {
-            return res.json().then((result) => {
-              return result;
-            });
-          });
+          fetch(e.request);
         }
       })
     )
@@ -46,7 +41,7 @@ self.addEventListener("activate", function (event) {
       return Promise.all(
         cachesName
           .filter(function (cacheName) {
-            return cacheName.startsWith("Offline-") && cacheName != StaticCache;
+            return cacheName.startsWith("Offline-") && cacheName != appCacheName;
           })
           .map(function (cacheName) {
             return caches.delete(cacheName);
