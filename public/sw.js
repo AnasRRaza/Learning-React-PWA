@@ -4,7 +4,7 @@ const appCacheName = "learn-pwa";
 
 self.addEventListener("install", (e) => {
   e.waitUntil(
-    caches.open(cacheName).then((cache) => {
+    caches.open(appCacheName).then((cache) => {
       return cache.addAll([ // files that runs in offline mode
         "/static/js/vendors~main.chunk.js",
         "/static/js/main.chunk.js",
